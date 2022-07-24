@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Just Get It</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class="d-flex flex-column page-content">
+    <%= render 'layouts/navigation' %>
+    <%= render 'layouts/messages' %>
+    <%= yield %>
+    <br />
+    <br />
+    <%= render 'layouts/footer' %>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<h1 class="text-center p-3"><%= "(Admin) " if @user.admin? %>
+                            <%= "(Mod) " if @user.mod? %>
+                            <%= "(Owner) " if @user.owner? %>
+                            <%= @user.username %>'s Profile</h1>
+<div class="container text-center", "img-fluid">
+  <%= gravatar_for @user, size: 200 %>
+</div>
+<div class="container text-center mt-4">
+  <% if logged_in? && (@user == current_user || current_user.admin? || current_user.owner?) %>
+    <%= link_to "Edit your profile", edit_user_path(@user), class: "btn btn-info" %>
+    <br />
+    <br />
+    <%= link_to "Delete Account", user_path(@user), class: "btn btn-outline-danger", method: :delete,
+    data: {confirm: "Are you sure you want to delete this account and all associated articles?"} %>
+  <% end %>
+
+</div>
+
+<div class="container text-center mt-4">
+  <% if logged_in? && current_user.owner? %>
+    <%= link_to "Promote Admin", promote_admin_user_path(@user), method: :patch, class: "btn btn-warning" %>
+    <br />
+    <br />
+  <% end %>
+  <% if logged_in? && current_user.owner? %>
+    <%= link_to "Demote Admin", demote_admin_user_path(@user), method: :patch, class: "btn btn-warning" %>
+    <br />
+    <br />
+  <% end %>
+  <% if logged_in? && (current_user.admin? || current_user.owner?) %>
+    <%= link_to "Promote Mod", promote_mod_user_path(@user), method: :patch, class: "btn btn-warning" %>
+    <br />
+    <br />
+  <% end %>
+  <% if logged_in? && (current_user.admin? || current_user.owner?) %>
+    <%= link_to "Demote Mod", demote_mod_user_path(@user), method: :patch, class: "btn btn-warning" %>
+    <br />
+    <br />
+  <% end %>
+
+</div>
+
+<div class="container text-center mt-4">
+
+</div>
+
+<h3 class="text-center p-3">Articles</h3>
+
+<div class="flickr_pagination">
+  <%= will_paginate @articles, :container => false %>
+</div>
+
+<%= render 'articles/article' %>
+
+<div class="flickr_pagination">
+  <%= will_paginate @articles, :container => false %>
+</div>

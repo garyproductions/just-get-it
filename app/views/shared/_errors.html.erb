@@ -1,0 +1,16 @@
+<% if obj.errors.any? %>
+<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+  <div>
+    <h4 class="alert-heading">Error Occured!</h4>
+    <br>
+    <p><b>The following errors prevented the <%= obj.class.name.downcase %> from being saved</b></p>
+    <ul>
+      <% obj.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>

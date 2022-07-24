@@ -1,0 +1,38 @@
+<h2 class="text-center p-3"><%= @article.title %></h2>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-6 m-4">
+        <div class="card text-center shadow m-6 bg-body rounded">
+          <div class="card-header fst-italic">
+            by <span class="admin-color"> <%= "(Admin)" if @article.user.admin? %>
+            <span class="mod-color"> <%= "(Mod)" if @article.user.mod? %>
+            <span class="owner-color"> <%= "(Owner)" if @article.user.owner? %>
+            <%= link_to @article.user.username, user_path(@article.user) if @article.user %>
+            </span></span></span>
+            <br />
+            <%= link_to gravatar_for(@article.user), user_path(@article.user) %>
+            <% if @article.categories.any? %>
+            <br />
+              <%= render @article.categories %>
+            <% end %>
+          </div>
+          <div class="card-body">
+            <div class="card-text text-start"> <td><%= simple_format(@article.description) %></td></div>
+            <% if logged_in? && (@article.user == current_user || current_user.admin? || current_user.mod || current_user.owner?) %>
+              <%= link_to "Edit", edit_article_path(@article), class: "btn btn-outline-info" %>
+            <% end %>
+            <% if logged_in? && (@article.user == current_user || current_user.admin? || current_user.owner?) %>
+              <%= link_to "Delete", article_path(@article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+            <% end %>
+          </div>
+          <div class="card-footer text-muted">
+            <small>Created  <%= time_ago_in_words(@article.created_at) %> ago,
+            edited <%= time_ago_in_words(@article.updated_at) %> ago </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center m-3">
+      <%= link_to 'Cancel and return to articles listing', articles_path, class: "text-info" %>
+    </div>
+</div>

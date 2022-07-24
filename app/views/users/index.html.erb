@@ -1,0 +1,8 @@
+<h1 class="text-center p-3">Listing All Users</h1>
+<div class="flickr_pagination">
+  <%= will_paginate @users, :container => false %>
+</div>
+<%= render 'users' %>
+<div class="flickr_pagination">
+  <%= will_paginate @users, :container => false %>
+</div>

@@ -1,0 +1,28 @@
+<h1 class="text-center p-3">Listing All Categories</h1>
+<div class="flickr_pagination">
+  <%= will_paginate @categories, :container => false %>
+</div>
+<div class="container">
+  <% @categories.each do |category| %>
+    <div class="row justify-content-center">
+      <div class="col-4 m-4">
+        <div class="card text-center shadow m-6 bg-body rounded">
+          <div class="card-body">
+            <h5 class="card-title"><td><%= link_to category.name, category_path(category), class: "text-success" %></td></h5>
+            <p class="card-text"> <td><%= pluralize(category.articles.count, "article") %></td></p>
+            <% if logged_in? && current_user.admin? %>
+              <%= link_to "Edit", edit_category_path(category), class: "btn btn-outline-info" %>
+              <%# <%= link_to "Delete", category_path(category), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+            <% end %>
+          </div>
+          <div class="card-footer text-muted">
+            <small>Created  <%= time_ago_in_words(category.created_at) %> ago</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="flickr_pagination">
+  <%= will_paginate @categories, :container => false %>
+</div>
